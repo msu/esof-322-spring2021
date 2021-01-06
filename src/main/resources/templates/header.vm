@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        main {
+            max-width: 46em;
+            margin: 2em auto;
+            padding: 0 1em;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+    </style>
+    <title>Hello ESOF 322</title>
+</head>
+<body>
+<main>
+
+    <h1><img src="https://avatars2.githubusercontent.com/u/67816555?s=50&v=4"> ESOF 322 - Software Engineering</h1>
+
+    <h4 style="color:green">$!message</h4>
+    <h4 style="color:red">$!error</h4>
+
+    <a href="/">Home</a>  | <a href="/users">Users</a> | <a href="/classes">Classes</a>
+    <hr/>
+
+    <%@ content %>
+
+</main>
+</body>
+</html>

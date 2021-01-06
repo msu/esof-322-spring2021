@@ -1,0 +1,57 @@
+#parse('templates/header.vm')
+
+<h2>User</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Property</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>FirstName</td>
+        <td>$!user.FirstName</td>
+    </tr>
+    <tr>
+        <td>LastName</td>
+        <td>$!user.lastName</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>$!user.email</td>
+    </tr>
+    <tr>
+        <td>Type</td>
+        <td>$!user.type</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Classes</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Class ID</th>
+        <th>Class Name</th>
+        <th>Class Title</th>
+    </tr>
+    </thead>
+    <tbody>
+        #foreach( $class in $user.Classes )
+        <tr>
+            <td><a href="/classes/$class.MSUClassId">$class.MSUClassId</a></td>
+            <td>$!class.Name</td>
+            <td>$!class.Title</td>
+        </tr>
+        #end
+    </tbody>
+</table>
+
+<a href="/users/$user.EmployeeId/edit">[Edit Employee]</a>
+<a href="/users/$user.EmployeeId/delete">[Delete Employee]</a>
+
+
+#parse('templates/footer.vm')

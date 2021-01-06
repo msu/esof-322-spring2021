@@ -1,0 +1,30 @@
+#parse('templates/header.vm')
+
+<h3>Classes</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Class ID</th>
+        <th>Name</th>
+        <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+        #foreach( $msuClass in $msuClasses )
+        <tr>
+            <td><a href="/classes/$msuClass.MSUClassId">$msuClass.MSUClassId</a></td>
+            <td>$!msuClass.Name</td>
+            <td>$!msuClass.Title</td>
+        </tr>
+        #end
+    </tbody>
+</table>
+
+$web.pagingWidget($msuClasses)
+
+
+<a href="/classes/new">[Create New Class]</a>
+
+
+#parse('templates/footer.vm')

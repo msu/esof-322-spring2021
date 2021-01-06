@@ -1,0 +1,7 @@
+/.idea/
+/csci-440-fall2020.iml
+/target/
+/db/
+/repos/student_repos
+/repos/student_repos/**
+/grading/scripts/repos/

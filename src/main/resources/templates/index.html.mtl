@@ -1,0 +1,4 @@
+<%@ layout templates.layout %>
+
+<p>Welcome to the ESOF 322 web project.</p>
+

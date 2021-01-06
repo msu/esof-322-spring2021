@@ -1,0 +1,34 @@
+#parse('templates/header.vm')
+
+<h3>Users</h3> <a href="/users/instructors">[instructors only]</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>User ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+        #foreach( $user in $users )
+        <tr>
+            <td><a href="/users/$user.u_id">$user.u_id</a></td>
+            <td>$user.f_n</td>
+            <td>$!user.LastName</td>
+            <td>$!user.Email</td>
+            <td>$!user.Type</td>
+        </tr>
+        #end
+    </tbody>
+</table>
+
+$web.pagingWidget($users)
+
+
+<a href="/users/new">[Create New User]</a>
+
+
+#parse('templates/footer.vm')
