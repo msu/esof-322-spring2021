@@ -24,7 +24,7 @@ be found on the home page of your new repository.
 Next, you and your partner should both add the class repository as an upstream git repo:
 
 ```bash
-$ git remote add upstream https://github.com/msu/csci-468-spring2021.git
+$ git remote add upstream https://github.com/msu/esof-322-spring2021.git
 $ git pull upstream master
 $ git push origin main
 ```
