@@ -14,6 +14,7 @@ For the project leader, please follow these instructions
     - Going to <https://github.com/new>
     - Enter the name `esof-322-spring2021-private`
     - Select `Private`
+    - **DO NOT ADD A README.MD or .gitignore!**
     - Navigate to the `Settings` -> `Manage Access` section
     - Add `1cg` as a collaborator
 
