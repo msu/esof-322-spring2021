@@ -1,4 +1,5 @@
-<%@ layout templates.layout %>
+#parse('templates/header.vm')
 
 <p>Welcome to the ESOF 322 web project.</p>
 
+#parse('templates/footer.vm')

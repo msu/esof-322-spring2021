@@ -18,8 +18,8 @@ class Server {
         /* Root Path                                                                 */
         /* ========================================================================= */
         get("/", (req, resp) -> {
-            Web.message("Software Engineering Is Awesome");
-            return templates.index.render();
+            Web.message("Software Engineering is Awesome!");
+            return Web.renderTemplate("templates/index.vm");
         });
 
         /* ========================================================================= */

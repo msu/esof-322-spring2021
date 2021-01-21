@@ -6,7 +6,7 @@ This is the base upstream repository for ESOF 322.  It will be used for code-rel
 Students will be working pairs for 322.  Please nominate one person as the project leader who
 will maintain the repository that you both use for implementing your project.
 
-## Getting Your Private Copy (Clone)
+## Getting Your Repo Set Up
 
 For the project leader, please follow these instructions
 
@@ -18,14 +18,18 @@ For the project leader, please follow these instructions
     - Add `1cg` as a collaborator
     - Add your partner as a collaborator
 
-Once your repository is initialized, you can pull it down to your local machine.  Instructions can
+Once your repository is initialized, you and your partner can pull it down to your local machines.  Instructions can
 be found on the home page of your new repository.
 
 Next, you and your partner should both add the class repository as an upstream git repo:
 
 ```bash
-$ git remote add upstream https://github.com/msu/csci-440-fall2020.git
+$ git remote add upstream https://github.com/msu/esof-322-spring2021.git
+$ git pull upstream master
+$ git push origin master
 ```
+This will synchronize your private repository with the class repository.
+
 When you want to get an update from the public class repository you can run this command:
 
 ```
