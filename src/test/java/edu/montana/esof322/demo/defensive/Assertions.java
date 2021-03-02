@@ -15,7 +15,7 @@ public class Assertions {
 
     public static void main(String[] args) {
         System.out.println(isValidEmail("foo@bar.com"));
-        System.out.println(isValidEmail(null));
+        //System.out.println(isValidEmail(null));
         System.out.println(isValidEmail2(null));
     }
 

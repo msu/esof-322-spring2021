@@ -35,8 +35,14 @@ public class BadRoutine {
     }
 
     void extractToMethodDemo(int deviceUnits) {
-        int points = deviceUnits *
-                (POINTS_PER_INCH / deviceUnitsPerInch());
+        int points = deviceUnitsToPoints(deviceUnits);
+    }
+
+    private int deviceUnitsToPoints(int deviceUnits) {
+        int deviceUnitsPerInch = deviceUnitsPerInch();
+        int pointsPerDUs = POINTS_PER_INCH / deviceUnitsPerInch;
+        int points = deviceUnits * pointsPerDUs;
+        return points;
     }
 
     //========================================

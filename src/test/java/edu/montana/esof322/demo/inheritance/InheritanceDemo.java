@@ -1,5 +1,7 @@
 package edu.montana.esof322.demo.inheritance;
 
+import java.lang.reflect.Field;
+
 public class InheritanceDemo {
 
     interface IVehicle {
@@ -7,6 +9,7 @@ public class InheritanceDemo {
     }
 
     abstract class Vehicle implements IVehicle {
+        private String foo = "Foo";
         @Override
         public void start() {
             /* a bunch of internal stuff */
@@ -21,21 +24,30 @@ public class InheritanceDemo {
         }
     }
 
-    class GoodCar implements IVehicle {
+    class GoodCar implements IVehicle, Honkable {
         Engine engine = new Engine();
         @Override
         public void start() { engine.start(); /* other car stuff */ }
 
         public void beep() { /* beep */ }
+
+        @Override
+        public void honk() {
+            beep();
+        }
     }
 
-    class GoodTruck implements IVehicle {
+    class GoodTruck implements IVehicle, Honkable {
         Engine engine = new Engine();
         @Override
         public void start() { engine.start();  /* other truck stuff */ }
 
         public void honk() {
         }
+    }
+
+    interface Honkable {
+        void honk();
     }
 
     class Engine {

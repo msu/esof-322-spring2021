@@ -4,10 +4,13 @@ public class Exceptions {
 
 
     static void throwsAnException() throws Exception {
-        throw new Exception("You shouldn't have done that...");
+        if(true) {
+            throw new Exception("You shouldn't have done that...");
+        }
+        System.out.println("here");
     }
 
-    static void nestsAnException() throws Exception {
+    static void nestsAnException()  {
         try {
             throwsAnException();
         } catch (Exception e) {
@@ -16,11 +19,13 @@ public class Exceptions {
     }
 
     public static void main(String[] args) {
+
         System.out.println("\n================================");
         System.out.println("A Basic Exception");
         System.out.println("================================\n");
         try {
             throwsAnException();
+            System.out.println("here2");
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -62,5 +67,6 @@ public class Exceptions {
         }
 
     }
+
 
 }
