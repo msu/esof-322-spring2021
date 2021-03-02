@@ -21,15 +21,15 @@ puts("github user id: #{user.login}")
 # =====================================================================
 #  helper functions
 # =====================================================================
-def each_student_dir(path)
-  Dir.foreach(path) do |filename|
-    next unless filename.end_with? "txt"
-    dir_name = filename.split(/[.,]/)[0]
-    destination = "#{path}/student_repos/#{dir_name}"
-    if File.directory? destination
-      yield destination
+def for_each_student_dir
+  each_student do |student|
+    dir = "repos/#{student_dir(student)}"
+    if Dir.exist? dir
+      Dir.chdir dir do
+        yield student["FIRST_NAME"], student["LAST_NAME"], dir
+      end
     else
-      puts "Directory #{destination} does not exist, can't test"
+      puts "Directory #{dir} does not exist"
     end
   end
 end
@@ -45,32 +45,47 @@ def student_dir(student)
   student["FIRST_NAME"].downcase + "_" + student["LAST_NAME"].downcase
 end
 
+def maven_test(pattern, output_file)
+  puts `timeout 30 mvn -B "-Dtest=#{pattern}" test > #{output_file} 2> err.out`
+end
+
+def cmake(output_file)
+  puts `timeout 30 cmake . > tmp.out; make > #{output_file} 2> err.out;`
+end
+
+def maybe_exec(command, output_file)
+  begin
+    output = `#{command}`
+    File.open(output_file, 'w') do |file|
+      file.write output
+    end
+  rescue
+    puts "Could not execute #{command}"
+  end
+end
+
+def pull
+  puts `git pull`
+end
+
+def push_grading
+  puts `git add grading/*; git commit -m "From Autograder"; git push`
+end
+
+def grading_dir_exist?
+  Dir.exist? "grading"
+end
+
+def make_grading_dir
+  Dir.mkdir "grading" unless Dir.exist? "grading"
+end
+
+
 # =====================================================================
 #  command line
 # =====================================================================
 
 case ARGV[0]
-when "accept_pull_requests"
-  puts("Accepting Pull Requests")
-  puts("------------------")
-  repo = client.repo(class_repo_name)
-  client.pull_requests(repo[:id]).each do |pr|
-    puts "  Merging #{pr[:id]} - #{pr[:number]}: #{pr[:head][:repo][:full_name]}"
-    client.merge_pull_request(repo[:id], pr[:number])
-  end
-when "init_repos"
-  each_student do |student|
-    dir = "repos/#{student_dir(student)}"
-    puts "Initializing #{student['FIRST_NAME']} #{student['LAST_NAME']} in #{dir}"
-    if File.file? dir + "/grading/autograde.rb"
-      puts "Already initialized..."
-    else
-      puts
-      `cd #{dir};
-       git pull #{class_repo_url} master;
-      `
-    end
-  end
 when "accept_invites"
   puts("Accepting Repository Invites")
   puts("------------------")
@@ -80,40 +95,34 @@ when "accept_invites"
   end
 when "grade"
   assignment = ARGV[1]
-  if assignment == "hwk4"
-    each_student do |student|
-      dir = "repos/#{student_dir(student)}"
-      puts "Grading #{student['FIRST_NAME']} #{student['LAST_NAME']} in #{dir}"
-      puts
-      `mkdir -p #{dir}/grading/;
-             cd #{dir};
-             mvn -Dtest=Homework4 test > grading/homework_4.txt 2> err.out;
-             git add grading/*;
-             git commit -m "From Autograder"
-             git push`
-    end
-  elsif assignment == "project"
-    each_student do |student|
-      dir = "repos/#{student_dir(student)}"
-      puts "Grading #{student['FIRST_NAME']} #{student['LAST_NAME']} in #{dir}"
-      puts
-      `mkdir -p #{dir}/grading/;
-             cd #{dir};
-             mvn "-Dtest=edu.montana.csci.csci440.model.*Test" test > grading/project.txt 2> err.out;
-             git add grading/*;
-             git commit -m "From Autograder"
-             git push`
+  if assignment == "hwk1"
+    for_each_student_dir do |first, last, dir|
+      puts "Grading #{first} #{last} in #{dir}"
+      pull
+      if grading_dir_exist?
+        maven_test("Homework1", "grading/hwk1.txt")
+        push_grading
+      end
     end
   else
     puts "Unknown assignment: #{assignment}"
   end
 when "clone_repos"
   each_student do |student|
-    repo_url = student["REPO"]
-    `git clone https://#{git_username}:#{git_token}@#{repo_url} repos/#{student_dir(student)}`
+    student_dir = student_dir(student)
+    if Dir.exist? student_dir
+      puts "Directory #{student_dir} already exists, skipping..."
+    else
+      repo_url = student["REPO"].gsub("https://", "")
+      if repo_url.nil? || repo_url.strip.empty?
+        puts("No git URL for #{student["FIRST_NAME"]} #{student["LAST_NAME"]}")
+        next
+      end
+      `git clone https://#{git_username}:#{git_token}@#{repo_url} repos/#{student_dir}`
+    end
   end
 when "clear_repos"
-  `rm -rf repos`
+  `rm -rf repos/*`
 else
   puts "Commands:
     accept_invites - accepts pending invites
