@@ -2,8 +2,7 @@ package edu.montana.esof322.homework.homework1;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Homework1 {
 
@@ -30,7 +29,7 @@ public class Homework1 {
 
         assertEquals("Joe", s2.getFirstName());
         assertEquals("Smith", s2.getLastName());
-        assertEquals("An ID", s2.getId());
+        assertNotNull(s2.getId());
     }
 
     @Test
