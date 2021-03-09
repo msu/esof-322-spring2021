@@ -21,9 +21,13 @@ public class VariablesDemo {
         List<Long> ids = new ArrayList<>();
         final List<User> all = User.all();
         for (User user : all) {
-            ids.add(user.u_id);
+            ids.add(getUserId(user));
         }
         System.out.println(ids);
+    }
+
+    private Long getUserId(User user) {
+        return user.u_id;
     }
 
     final List<User> all = User.all();

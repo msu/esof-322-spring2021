@@ -13,12 +13,12 @@ public class VariableName {
     private static final Object AN_ERROR_OCCURRED = 1;
 
     void badNames(){
-        int x = 0, xx = 0, xxx = 0, x1 = 0;
+        int x = 0, xx = 0, y = 0, x1 = 0;
         int fido = 0;
 
         x = x * xx;
-        xxx = fido + SalesTax( fido );
-        x = x + LateFee( x1, x ) + xxx;
+        y = fido + SalesTax( fido );
+        x = x + LateFee( x1, x ) + y;
         x = x + Interest( x1, x );
 
     }
