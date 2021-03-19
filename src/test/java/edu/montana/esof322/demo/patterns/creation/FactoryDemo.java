@@ -1,5 +1,8 @@
 package edu.montana.esof322.demo.patterns.creation;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.function.Supplier;
 
 public class FactoryDemo {
@@ -39,7 +42,19 @@ public class FactoryDemo {
 
     public static class CarsFactory {
         public static Car getCar(CarType type) {
-            return type.getConstructor().get();
+            if (type == CarType.FERRARI) {
+                return new Ferrari();
+            } else {
+                Ford ford = new Ford();
+                return (Car) Proxy.newProxyInstance(CarsFactory.class.getClassLoader(), new Class[]{Car.class},
+                        new InvocationHandler() {
+                            @Override
+                            public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
+                                System.out.println("Proxied method call on ford!");
+                                return method.invoke(ford, objects);
+                            }
+                        });
+            }
         }
     }
 
@@ -52,7 +67,7 @@ public class FactoryDemo {
     }
 
     public static void main(String[] args) {
-
+        Car car0 = new Ford();
         Car car1 = CarsFactory.getCar(CarType.FORD);
         Car car2 = CarsFactory.getCar(CarType.FERRARI);
 

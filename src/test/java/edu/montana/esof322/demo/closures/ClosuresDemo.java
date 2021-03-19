@@ -19,12 +19,13 @@ public class ClosuresDemo {
         List<String> strings =
                 Arrays.asList("a", "ab", "abc");
 
-        Stream<String> longEnoughStrings =
+        List<String> longEnoughStrings =
                 strings
                         .stream()
-                        .filter(s -> s.length() >= length);
+                        .filter(s -> s.length() >= length)
+                        .collect(Collectors.toList());
 
-        System.out.println(longEnoughStrings.collect(Collectors.joining(",")));
+//        System.out.println(longEnoughStrings.collect(Collectors.joining(",")));
 
         ArrayList<String> result = new ArrayList<>();
         for (String str : strings) {
@@ -48,6 +49,26 @@ public class ClosuresDemo {
 
         runIt2.run();
 
+    }
+
+    static class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            System.out.println("This is a runnable");
+        }
+    }
+
+    public static void main(String[] args) {
+    }
+
+    private static Runnable makeARunnable() {
+        String string = "This is an anonymous inner class runnable...";
+        return new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(string);
+            }
+        };
     }
 
 

@@ -5,12 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static edu.montana.esof322.demo.variables.VariableName.Color.*;
-import static java.awt.Color.RED;
-
 public class VariableName {
 
     private static final Object AN_ERROR_OCCURRED = 1;
+    public static final int MAX_REPORT_INDEX = 200;
 
     void badNames(){
         int x = 0, xx = 0, y = 0, x1 = 0;
@@ -73,9 +71,9 @@ public class VariableName {
     void typeSpecificConsiderations() {
 
         int count = 0;
-        int MAX_JOBS = 0;
+        int MAX_JOBS = 200;
 
-        while (count > 0) {
+        while (count < 0) {
             keepDoingIt();
         }
 
@@ -134,6 +132,22 @@ public class VariableName {
         }
 
 
+    }
+
+    private int _i;
+    private int _l;
+
+    private void maybeCleanUpReports(int reportIndex,
+                                     int lastReportIndex) {
+        boolean invalidIndex = !isValidReportIndex(reportIndex);
+        boolean isLastReport = reportIndex == lastReportIndex;
+        if (invalidIndex || isLastReport) {
+            cleanUp();
+        }
+    }
+
+    private boolean isValidReportIndex(int reportIndex) {
+        return (0 < reportIndex) && (reportIndex < MAX_REPORT_INDEX);
     }
 
     private void cleanUp() {

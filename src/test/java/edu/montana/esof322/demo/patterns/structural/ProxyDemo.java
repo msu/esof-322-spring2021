@@ -1,5 +1,7 @@
 package edu.montana.esof322.demo.patterns.structural;
 
+import java.util.Objects;
+
 public class ProxyDemo {
 
     public static class Wizard {

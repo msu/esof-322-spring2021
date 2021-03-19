@@ -1,5 +1,8 @@
 package edu.montana.esof322.demo.patterns.structural;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class AdapterDemo {
 
     public interface RowingBoat {

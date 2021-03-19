@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Perf Demo</title>
+</head>
+<body>
+<script>
+
+    function fibonacci(num)
+    {
+        console.log("Calculating fib for " + num);
+        var returnVal = 0;
+        if (num === 2) {
+            returnVal = 1;
+        } else if(num > 2) {
+            returnVal = fibonacci(num - 1) + fibonacci(num - 2);
+        }
+        return returnVal;
+    }
+
+    function runFib() {
+        var int = parseInt(document.getElementById("number").value);
+        if(int >= 45) {
+            document.getElementById("result").innerHTML = "Please enter a number less than 45";
+            return;
+        }
+        document.getElementById("result").innerHTML = "Calculating...";
+        setTimeout(function(){
+            document.getElementById("result").innerHTML = fibonacci(int);
+        })
+    }
+
+</script>
+<button onclick="runFib()">
+    Run Fib
+</button>
+<input type="number" id="number">
+<div>
+    Result: <span id="result"></span>
+</div>
+
+</body>
+</html>
