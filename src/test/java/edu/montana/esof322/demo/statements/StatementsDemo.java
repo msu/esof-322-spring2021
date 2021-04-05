@@ -1,5 +1,7 @@
 package edu.montana.esof322.demo.statements;
 
+import edu.montana.esof322.model.MSUClass;
+import edu.montana.esof322.model.User;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -35,6 +37,42 @@ public class StatementsDemo {
         BadDataPrinter dataPrinter = new BadDataPrinter();
         dataPrinter.printData();
     }
+
+    public void statementGrouping(Integer msuClassId) {
+
+        Map<User, List<User>> reportsForUser = new HashMap<>();
+        MSUClass msuClass = MSUClass.find(msuClassId);
+        Set<User> advisors = new HashSet<>();
+        Set<User> advisorReports = new HashSet<>();
+
+        // create reports map
+        for (User user : User.all()) {
+            if(user.rt != null) {
+                User boss = User.find(user.rt);
+                List<User> reports = reportsForUser.getOrDefault(boss, new LinkedList<>());
+                reports.add(user);
+            }
+        }
+
+
+
+        // Find adivsors
+        List<User> users = msuClass.getUsers();
+        for (int i = 0; i < users.size(); i++) {
+            User student = users.get(i);
+            Long advisorId = student.adv;
+            User advisor = User.find(advisorId);
+            System.out.println("Found advisor: " + advisor);
+            advisors.add(advisor);
+            if (i == users.size() - 1) {
+                // create reports map
+                for (User u : advisors) {
+                    advisorReports.addAll(reportsForUser.get(u));
+                }
+            }
+        }
+    }
+
 
     @Test
     public void ifStatemetents() {
@@ -212,6 +250,9 @@ public class StatementsDemo {
 
 
     static private void addData(String moreData) {
+        if (_data == null) {
+            throw new IllegalStateException("_data must be initialized first with genData()");
+        }
         _data.add(moreData);
     }
 

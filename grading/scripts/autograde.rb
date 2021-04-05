@@ -42,7 +42,7 @@ def each_student
 end
 
 def student_dir(student)
-  student["FIRST_NAME"].downcase + "_" + student["LAST_NAME"].downcase
+  student["FIRST_NAME"].downcase.sub(" ", "_") + "_" + student["LAST_NAME"].downcase.sub(" ", "_")
 end
 
 def maven_test(pattern, output_file)
@@ -101,6 +101,15 @@ when "grade"
       pull
       if grading_dir_exist?
         maven_test("Homework1", "grading/hwk1.txt")
+        push_grading
+      end
+    end
+  elsif assignment == "hwk2"
+    for_each_student_dir do |first, last, dir|
+      puts "Grading #{first} #{last} in #{dir}"
+      pull
+      if grading_dir_exist?
+        maven_test("Homework2", "grading/hwk2.txt")
         push_grading
       end
     end

@@ -3,8 +3,10 @@ package edu.montana.esof322.demo.pseudocode;
 import edu.montana.esof322.model.MSUClass;
 import edu.montana.esof322.model.User;
 import org.eclipse.jetty.http.HttpFields;
+import org.eclipse.jetty.http.PathMap;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,13 +34,22 @@ public class PseudocodeDemo {
     // Endif
     // Return true if a new resource was created; else return false
 
-    // Pseudocode --> Code
-    //
-    // Find All Advisors For An MSU Class by ID
-    //
-    // Look up the class
-    // For each student in the class
-    //   collect the advisor for that student into a set
-    // Return the set of advisors
+
+    // Find All Advisors For An MSU Class by Class ID
+    List<User> findAllAdvisorsForMSUClass(Integer msuClassId) {
+        // Look up the class
+        MSUClass msuClass = MSUClass.find(msuClassId);
+        Set<User> advisors = new HashSet<>();
+        // For each student in the class
+        for (User student : msuClass.getUsers()) {
+            //   collect the advisor for that student into a set
+            Long advisorId = student.adv;
+            User advisor = User.find(advisorId);
+            advisors.add(advisor);
+        }
+        // Return the set of advisors
+        LinkedList<User> advisorsAsList = new LinkedList<>(advisors);
+        return advisorsAsList;
+    }
 
 }
